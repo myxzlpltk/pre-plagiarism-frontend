@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/pre-plagiarism-frontend/static/css/main.1f42e80a.css",
+    "main.js": "/pre-plagiarism-frontend/static/js/main.aa737f01.js",
+    "static/js/787.ee2e4e37.chunk.js": "/pre-plagiarism-frontend/static/js/787.ee2e4e37.chunk.js",
+    "static/media/um-rektorat.jpg": "/pre-plagiarism-frontend/static/media/um-rektorat.5cfbfed8b6d0ce8b87d0.jpg",
+    "index.html": "/pre-plagiarism-frontend/index.html",
+    "main.1f42e80a.css.map": "/pre-plagiarism-frontend/static/css/main.1f42e80a.css.map",
+    "main.aa737f01.js.map": "/pre-plagiarism-frontend/static/js/main.aa737f01.js.map",
+    "787.ee2e4e37.chunk.js.map": "/pre-plagiarism-frontend/static/js/787.ee2e4e37.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1f42e80a.css",
+    "static/js/main.aa737f01.js"
+  ]
+}
