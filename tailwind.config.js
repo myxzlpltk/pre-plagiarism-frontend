@@ -8,6 +8,12 @@ module.exports = {
       backgroundImage: {
         "how-it-works": "url('/public/img/um-rektorat.jpg')",
       },
+      saturate: {
+        75: ".75",
+      },
+      brightness: {
+        110: "1.1",
+      },
     },
   },
   plugins: [
