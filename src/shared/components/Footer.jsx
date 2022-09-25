@@ -5,11 +5,11 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="footer container mx-auto p-10 bg-base text-base-content">
+    <footer className="footer container mx-auto p-10 bg-gray-100 text-base-content">
       <div>
         <p className="footer-title opacity-100">
           Built with <FontAwesomeIcon icon={faHeart} className="text-red-600" /> and <FontAwesomeIcon
-          icon={faReact} /><br />
+          icon={faReact} className="text-cyan-500" /><br />
         </p>
         <p>
           <span>Teknik Informatika</span><br />
