@@ -10,6 +10,7 @@ import { login } from "./redux/reducers/auth";
 import Footer from "./shared/components/Footer";
 import Navbar from "./shared/components/Navbar";
 import RequireAuth from "./shared/components/RequireAuth";
+import AuthVerify from "./shared/utils/AuthVerify";
 
 const App = () => {
   const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
@@ -29,18 +30,22 @@ const App = () => {
           <Toaster />
           <Navbar />
 
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route
-              path="/dashboard"
-              element={
-                <RequireAuth>
-                  <Dashboard />
-                </RequireAuth>
-              }
-            />
-          </Routes>
+          <div className="relative">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route
+                path="/dashboard"
+                element={
+                  <RequireAuth>
+                    <Dashboard />
+                  </RequireAuth>
+                }
+              />
+            </Routes>
+
+            <AuthVerify />
+          </div>
 
           <Footer />
         </div>
