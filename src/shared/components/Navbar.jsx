@@ -73,7 +73,7 @@ const Navbar = () => {
               render={(renderProps) => (
                 <button
                   onClick={renderProps.onClick}
-                  className="btn btn-sm btn-primary"
+                  className="btn btn-sm btn-error"
                 >
                   Keluar
                 </button>
