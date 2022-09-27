@@ -7,8 +7,4 @@ export default configureStore({
     home: homeReducer,
     auth: authReducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-    }),
 });

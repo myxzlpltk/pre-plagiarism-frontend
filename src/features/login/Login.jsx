@@ -1,11 +1,11 @@
+import { GoogleLogin } from "@react-oauth/google";
 import React from "react";
-import GoogleLogin from "react-google-login";
+import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { setUser } from "../../redux/reducers/auth";
+import { login } from "../../redux/reducers/auth";
 
 const Login = () => {
-  const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
 
@@ -27,13 +27,9 @@ const Login = () => {
             <span>Tidak perlu mengingat username dan password lagi...</span>
           </h3>
           <GoogleLogin
-            clientId={clientId}
-            buttonText="Masuk dengan Akun Google"
-            onSuccess={(res) => dispatch(setUser(res))}
-            onFailure={() => window.alert("Error on login")}
-            cookiePolicy={"single_host_origin"}
-            isSignedIn={true}
-            className="mb-5"
+            onSuccess={(res) => dispatch(login(res.credential))}
+            onError={() => toast.error("Terjadi kesalahan saat login")}
+            text="continue_with"
           />
         </div>
       </div>
