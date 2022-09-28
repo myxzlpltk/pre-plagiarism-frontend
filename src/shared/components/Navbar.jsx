@@ -8,6 +8,7 @@ import { logout } from "../../redux/reducers/auth";
 const Navbar = () => {
   const appName = process.env.REACT_APP_NAME;
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const picture = useSelector((state) => state.auth.picture);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -31,16 +32,30 @@ const Navbar = () => {
         <div className="navbar-end">
           {isAuthenticated ? (
             <div className="flex gap-2">
-              <Link to="/login" className="btn btn-sm btn-square btn-ghost">
-                <FontAwesomeIcon icon={faHome} />
+              <Link to="/login" className="btn btn-square btn-ghost">
+                <FontAwesomeIcon icon={faHome} size="xl" />
               </Link>
-              <button
-                onClick={() => dispatch(logout())}
-                className="btn btn-sm btn-error gap-2"
-              >
-                <FontAwesomeIcon icon={faSignOut} />
-                <span>Keluar</span>
-              </button>
+              <div className="dropdown dropdown-end">
+                <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                  <div className="w-10 rounded-full">
+                    <img src={picture} alt="Foto profil" />
+                  </div>
+                </label>
+                <ul
+                  tabIndex={0}
+                  className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
+                >
+                  <li>
+                    <button
+                      onClick={() => dispatch(logout())}
+                      className="flex gap-2"
+                    >
+                      <FontAwesomeIcon icon={faSignOut} />
+                      <span>Keluar</span>
+                    </button>
+                  </li>
+                </ul>
+              </div>
             </div>
           ) : (
             <Link to="/login" className="btn btn-sm btn-primary gap-2">

@@ -1,4 +1,3 @@
-import { GoogleOAuthProvider } from "@react-oauth/google";
 import React, { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 import { useDispatch } from "react-redux";
@@ -13,7 +12,6 @@ import RequireAuth from "./shared/components/RequireAuth";
 import AuthVerify from "./shared/utils/AuthVerify";
 
 const App = () => {
-  const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -24,33 +22,31 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <GoogleOAuthProvider clientId={clientId}>
-      <BrowserRouter>
-        <div>
-          <Toaster />
-          <Navbar />
+    <BrowserRouter>
+      <div>
+        <Toaster />
+        <Navbar />
 
-          <div className="relative">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route
-                path="/dashboard"
-                element={
-                  <RequireAuth>
-                    <Dashboard />
-                  </RequireAuth>
-                }
-              />
-            </Routes>
+        <div className="relative">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/dashboard"
+              element={
+                <RequireAuth>
+                  <Dashboard />
+                </RequireAuth>
+              }
+            />
+          </Routes>
 
-            <AuthVerify />
-          </div>
-
-          <Footer />
+          <AuthVerify />
         </div>
-      </BrowserRouter>
-    </GoogleOAuthProvider>
+
+        <Footer />
+      </div>
+    </BrowserRouter>
   );
 };
 
