@@ -29,25 +29,40 @@ export const authSlice = createSlice({
       state.email = action.payload.email;
       state.picture = action.payload.picture;
     });
+    builder.addCase(login.rejected, (state, action) => {
+      state.isAuthenticated = false;
+      if (action.meta.rejectedWithValue) {
+        toast.error(action.payload);
+      } else {
+        toast.error("Terjadi kesalahan");
+      }
+    });
   },
 });
 
-export const login = createAsyncThunk("auth/login", async (token: string) => {
-  localStorage.setItem("token", token);
-  const decoded = jwtDecode(token, {});
+export const login = createAsyncThunk(
+  "auth/login",
+  async (token: string, { rejectWithValue }) => {
+    localStorage.setItem("token", token);
+    const decoded = jwtDecode(token, {});
 
-  if (decoded.exp * 1000 < Date.now()) {
-    toast.error("Sesi login telah berakhir, silahkan login kembali");
-  } else {
-    const res = await axios.get("https://oauth2.googleapis.com/tokeninfo", {
-      params: { id_token: token },
-    });
+    if (decoded.exp * 1000 < Date.now()) {
+      return rejectWithValue(
+        "Sesi login telah berakhir, silahkan login kembali"
+      );
+    } else {
+      const res = await axios.get("https://oauth2.googleapis.com/tokeninfo", {
+        params: { id_token: token },
+      });
 
-    if (res.status === 200) {
-      return res.data;
+      if (res.status === 200) {
+        return res.data;
+      } else {
+        return rejectWithValue("Verifikasi token gagal");
+      }
     }
   }
-});
+);
 
 export const { logout } = authSlice.actions;
 export default authSlice.reducer;

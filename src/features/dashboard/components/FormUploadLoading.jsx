@@ -19,7 +19,6 @@ const FormUploadLoading = (props) => {
     >
       <Lottie options={defaultOptions} width="50%" isClickToPauseDisabled />
       <h3 className="text-2xl mb-5">Sedang mengunggah...</h3>
-      <progress className="progress w-full" value="20" max="100"></progress>
     </div>
   );
 };

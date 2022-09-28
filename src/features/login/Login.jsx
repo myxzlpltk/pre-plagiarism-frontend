@@ -27,7 +27,12 @@ const Login = () => {
             <span>Tidak perlu mengingat username dan password lagi...</span>
           </h3>
           <GoogleLogin
-            onSuccess={(res) => dispatch(login(res.credential))}
+            onSuccess={(res) =>
+              toast.promise(dispatch(login(res.credential)), {
+                loading: "Memverifikasi",
+                success: "Berhasil login",
+              })
+            }
             onError={() => toast.error("Terjadi kesalahan saat login")}
             text="continue_with"
           />
