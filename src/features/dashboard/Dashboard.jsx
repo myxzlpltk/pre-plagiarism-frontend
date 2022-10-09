@@ -1,7 +1,7 @@
-import { faRefresh } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect } from "react";
+import { FaDownload, FaExclamationTriangle, FaEye } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
+import { generatePath, Link } from "react-router-dom";
 import { fetchDashboardData } from "../../redux/reducers/dashboard";
 import DocumentProcessing from "./components/DocumentProcessing";
 import FormUpload from "./components/FormUpload";
@@ -64,7 +64,19 @@ const Dashboard = () => {
                         </span>
                       </td>
                       <td align="center">
-                        <button className="btn btn-ghost btn-sm">Unduh</button>
+                        <div className="btn-group">
+                          <Link
+                            className="btn btn-sm"
+                            to={generatePath("/dashboard/viewer/:id", {
+                              id: i,
+                            })}
+                          >
+                            <FaEye />
+                          </Link>
+                          <button className="btn btn-primary btn-sm">
+                            <FaDownload />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -77,7 +89,7 @@ const Dashboard = () => {
                       className="btn btn-ghost btn-sm gap-2"
                       onClick={() => dispatch(fetchDashboardData())}
                     >
-                      <FontAwesomeIcon icon={faRefresh} />
+                      <FaExclamationTriangle />
                       <span>Muat ulang</span>
                     </button>
                   </td>

@@ -1,7 +1,5 @@
-import { faReact } from "@fortawesome/free-brands-svg-icons";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { FaHeart, FaReact } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -9,10 +7,10 @@ const Footer = () => {
       <div className="footer container mx-auto">
         <div>
           <p className="footer-title opacity-100">
-            Built with{" "}
-            <FontAwesomeIcon icon={faHeart} className="text-red-600" /> and{" "}
-            <FontAwesomeIcon icon={faReact} className="text-cyan-500" />
-            <br />
+            <span>Built with </span>
+            <FaHeart className="text-red-600 inline" />
+            <span> and </span>
+            <FaReact className="text-cyan-500 inline" />
           </p>
           <p>
             <span>Teknik Informatika</span>

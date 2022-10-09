@@ -1,6 +1,6 @@
-import { faHome, faSignIn, faSignOut } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect } from "react";
+import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
+import { MdDashboard } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../../redux/reducers/auth";
@@ -33,7 +33,7 @@ const Navbar = () => {
           {isAuthenticated ? (
             <div className="flex gap-2">
               <Link to="/login" className="btn btn-square btn-ghost">
-                <FontAwesomeIcon icon={faHome} size="xl" />
+                <MdDashboard size={24} />
               </Link>
               <div className="dropdown dropdown-end">
                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
@@ -50,7 +50,7 @@ const Navbar = () => {
                       onClick={() => dispatch(logout())}
                       className="flex gap-2"
                     >
-                      <FontAwesomeIcon icon={faSignOut} />
+                      <FaSignOutAlt />
                       <span>Keluar</span>
                     </button>
                   </li>
@@ -59,7 +59,7 @@ const Navbar = () => {
             </div>
           ) : (
             <Link to="/login" className="btn btn-sm btn-primary gap-2">
-              <FontAwesomeIcon icon={faSignIn} />
+              <FaSignInAlt />
               <span>Masuk</span>
             </Link>
           )}

@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Dashboard from "./features/dashboard/Dashboard";
 import Home from "./features/home/Home";
 import Login from "./features/login/Login";
+import ViewResult from "./features/view_result/ViewResult";
 import { login } from "./redux/reducers/auth";
 import Footer from "./shared/components/Footer";
 import Navbar from "./shared/components/Navbar";
@@ -39,6 +40,7 @@ const App = () => {
                 </RequireAuth>
               }
             />
+            <Route path="/dashboard/viewer/:id" element={<ViewResult />} />
           </Routes>
 
           <AuthVerify />

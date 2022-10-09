@@ -1,7 +1,6 @@
-import { faFilePdf } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import Dropzone from "react-dropzone";
+import { FaFilePdf } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { uploadFile } from "../../../redux/reducers/dashboard";
 
@@ -20,7 +19,7 @@ const FormUpload = () => {
             accept="application/pdf"
             multiple={false}
           />
-          <FontAwesomeIcon icon={faFilePdf} className="text-5xl mb-5" />
+          <FaFilePdf className="text-5xl mb-5" />
           <h3 className="text-2xl">
             {isDragActive ? "Seret file disini" : "Klik atau seret file disini"}
           </h3>
