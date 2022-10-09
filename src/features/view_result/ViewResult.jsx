@@ -19,10 +19,10 @@ const ViewResult = () => {
   if (status === "success") {
     return (
       <div className="flex">
-        <div className="basis-1/3">
+        <div className="basis-1/3 lg:basis-1/4">
           <ViewerSidebar />
         </div>
-        <div className="basis-2/3">
+        <div className="basis-2/3 lg:basis-2/4">
           <ViewerDocument />
         </div>
       </div>
