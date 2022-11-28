@@ -15,11 +15,18 @@ import AuthVerify from "./shared/utils/AuthVerify";
 const App = () => {
   const dispatch = useDispatch();
 
+  // Call api login periodically
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      dispatch(login(token));
-    }
+    const checkLogin = () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        dispatch(login(token));
+      }
+    };
+
+    checkLogin();
+    const interval = setInterval(checkLogin, 5000);
+    return () => clearInterval(interval);
   }, [dispatch]);
 
   return (

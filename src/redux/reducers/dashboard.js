@@ -1,22 +1,31 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
+import api from "../../api";
+import { login } from "./auth";
 
 export const dashboardSlice = createSlice({
   name: "dashboard",
   initialState: {
-    jobStatus: "working",
-    job: {
-      createdAt: 1664356415956,
-    },
+    jobStatus: "idle",
+    jobCreatedAt: null,
     fetchStatus: "loading",
     data: [],
   },
   extraReducers: (builder) => {
+    builder.addCase(login.fulfilled, (state, action) => {
+      if (action.payload.idle) {
+        state.jobStatus = "idle";
+      } else {
+        state.jobStatus = "working";
+        state.jobCreatedAt = action.payload.jobCreatedAt;
+      }
+    });
     builder.addCase(uploadFile.pending, (state) => {
       state.jobStatus = "loading";
     });
-    builder.addCase(uploadFile.fulfilled, (state) => {
+    builder.addCase(uploadFile.fulfilled, (state, action) => {
       state.jobStatus = "working";
+      state.jobCreatedAt = action.payload.createdAt;
       toast.success("File uploaded successfully");
     });
     builder.addCase(uploadFile.rejected, (state, action) => {
@@ -28,9 +37,6 @@ export const dashboardSlice = createSlice({
       }
     });
 
-    builder.addCase(fetchDashboardData.pending, (state) => {
-      state.fetchStatus = "loading";
-    });
     builder.addCase(fetchDashboardData.fulfilled, (state, action) => {
       state.fetchStatus = "success";
       state.data = action.payload;
@@ -48,16 +54,20 @@ export const dashboardSlice = createSlice({
 
 export const fetchDashboardData = createAsyncThunk(
   "dashboard/fetchDashboardData",
-  async () => {
-    await new Promise((r) => setTimeout(r, 1500));
+  async (_, { rejectWithValue }) => {
+    const res = await api.get("documents");
 
-    return [...Array(10).keys()];
+    if (res.status === 200) {
+      return res.data;
+    } else {
+      return rejectWithValue("Terjadi kesalahan");
+    }
   }
 );
 
 export const uploadFile = createAsyncThunk(
   "dashboard/upload",
-  async (files: File[], { rejectWithValue }) => {
+  async (files: File[], { rejectWithValue, dispatch }) => {
     const acceptedFiles = files.filter(
       (file) => file.type === "application/pdf"
     );
@@ -67,8 +77,19 @@ export const uploadFile = createAsyncThunk(
     } else if (acceptedFiles.length > 1) {
       return rejectWithValue("Hanya boleh upload 1 file");
     } else {
-      await new Promise((r) => setTimeout(r, 3000));
-      return acceptedFiles[0];
+      const formData = new FormData();
+      formData.append("file", acceptedFiles[0]);
+
+      const res = await api.post("documents", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      if (res.status === 200) {
+        dispatch(fetchDashboardData());
+        return res.data;
+      } else {
+        return rejectWithValue("Terjadi kesalahan");
+      }
     }
   }
 );

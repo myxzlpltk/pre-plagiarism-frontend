@@ -1,8 +1,8 @@
 import { googleLogout } from "@react-oauth/google";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import jwtDecode from "jwt-decode";
 import toast from "react-hot-toast";
+import api from "../../api";
 
 export const authSlice = createSlice({
   name: "auth",
@@ -11,6 +11,7 @@ export const authSlice = createSlice({
     name: null,
     email: null,
     picture: null,
+    idle: null,
   },
   reducers: {
     logout: (state) => {
@@ -20,6 +21,7 @@ export const authSlice = createSlice({
       state.name = null;
       state.email = null;
       state.imageUrl = null;
+      state.idle = null;
     },
   },
   extraReducers: (builder) => {
@@ -28,6 +30,7 @@ export const authSlice = createSlice({
       state.name = action.payload.name;
       state.email = action.payload.email;
       state.picture = action.payload.picture;
+      state.idle = action.payload.idle;
     });
     builder.addCase(login.rejected, (state, action) => {
       state.isAuthenticated = false;
@@ -42,18 +45,18 @@ export const authSlice = createSlice({
 
 export const login = createAsyncThunk(
   "auth/login",
-  async (token: string, { rejectWithValue }) => {
+  async (token: string, { rejectWithValue, dispatch }) => {
+    console.log(token);
     localStorage.setItem("token", token);
     const decoded = jwtDecode(token, {});
 
     if (decoded.exp * 1000 < Date.now()) {
+      dispatch(logout());
       return rejectWithValue(
         "Sesi login telah berakhir, silahkan login kembali"
       );
     } else {
-      const res = await axios.get("https://oauth2.googleapis.com/tokeninfo", {
-        params: { id_token: token },
-      });
+      const res = await api.post("auth");
 
       if (res.status === 200) {
         return res.data;

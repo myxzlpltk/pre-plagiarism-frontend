@@ -2,11 +2,13 @@ import moment from "moment";
 import "moment/locale/id";
 import React from "react";
 import Lottie from "react-lottie";
+import { useSelector } from "react-redux";
 import SimpleTimer from "../../../shared/components/SimpleTimer";
 import * as animationData from "../../../shared/lottie/checking-doc.json";
 
 const DocumentProcessing = (props) => {
-  const date = moment().subtract(2, "seconds").unix();
+  const jobCreatedAt = useSelector((state) => state.dashboard.jobCreatedAt);
+  const date = moment(jobCreatedAt).unix();
   const defaultOptions = {
     loop: true,
     autoplay: true,
