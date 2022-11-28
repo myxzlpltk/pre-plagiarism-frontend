@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
-import data from "../../tests/data.json";
+import api from "../../api";
 
 function merge(r1, r2) {
   return {
@@ -30,13 +30,15 @@ export const viewerSlice = createSlice({
   reducers: {
     setActiveIndex: (state, action) => {
       state.activeIndex = action.payload;
-      document.location.hash = `highlight-${
-        state.highlights[action.payload].id
-      }`;
+      window.history.replaceState(
+        undefined,
+        undefined,
+        `#highlight-${state.highlights[action.payload].id}`
+      );
     },
     resetHighlight: (state) => {
       state.activeIndex = -1;
-      document.location.hash = "";
+      window.history.replaceState(undefined, undefined, "#");
     },
   },
   extraReducers: (builder) => {
@@ -45,7 +47,8 @@ export const viewerSlice = createSlice({
     });
     builder.addCase(fetchDocumentData.fulfilled, (state, action) => {
       state.status = "success";
-      state.highlights = action.payload;
+      state.url = `${process.env.REACT_APP_API_URL}/files/${action.payload.id}/${action.payload.filename}`;
+      state.highlights = action.payload.highlights;
 
       let id = document.location.hash.slice("#highlight-".length);
       if (id) {
@@ -68,10 +71,16 @@ export const viewerSlice = createSlice({
 
 export const fetchDocumentData = createAsyncThunk(
   "viewer/fetchDocumentData",
-  async () => {
+  async (id: String, { rejectWithValue }) => {
+    const res = await api.get("documents/" + id);
+
+    if (res.status !== 200) {
+      return rejectWithValue("Terjadi kesalahan");
+    }
+
     let highlights = [];
 
-    data.result.method2.forEach((page) => {
+    (res.data.result?.method2?.pages || []).forEach((page) => {
       page.items.forEach((item, index) => {
         highlights.push({
           id: "method2-" + page.page + "-" + index,
@@ -106,14 +115,14 @@ export const fetchDocumentData = createAsyncThunk(
       });
     });
 
-    data.result.method5.forEach((page, index) => {
+    (res.data.result?.method5?.pages || []).forEach((page, index) => {
       let rects = page.items.map((item) => ({
-        x1: item.rect.x1,
-        y1: item.rect.y1,
-        x2: item.rect.x2,
-        y2: item.rect.y2,
-        width: page.width,
-        height: page.height,
+        x1: item.rect.x0,
+        y1: item.rect.y0,
+        x2: item.rect.x1,
+        y2: item.rect.y1,
+        width: page.page_width,
+        height: page.page_height,
       }));
       let combinedRect = mergeAll(rects);
 
@@ -139,6 +148,7 @@ export const fetchDocumentData = createAsyncThunk(
         },
       });
     });
+
     highlights.sort(
       (a, b) => a.position.boundingRect.x1 - b.position.boundingRect.x1
     );
@@ -147,7 +157,11 @@ export const fetchDocumentData = createAsyncThunk(
     );
     highlights.sort((a, b) => a.position.pageNumber - b.position.pageNumber);
 
-    return highlights;
+    return {
+      id: id,
+      filename: res.data.filename,
+      highlights: highlights,
+    };
   }
 );
 

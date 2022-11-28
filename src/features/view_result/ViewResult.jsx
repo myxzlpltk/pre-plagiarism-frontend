@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { FaExclamationTriangle } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { fetchDocumentData } from "../../redux/reducers/viewer";
 import LoadingDocumentAnimation from "../../shared/components/LoadingDocumentAnimation";
 import ViewerDocument from "./components/ViewerDocument";
@@ -8,13 +9,14 @@ import ViewerSidebar from "./components/ViewerSidebar";
 
 const ViewResult = () => {
   // State
+  const params = useParams();
   const dispatch = useDispatch();
   const status = useSelector((state) => state.viewer.status);
 
   // Effects
   useEffect(() => {
-    dispatch(fetchDocumentData());
-  }, [dispatch]);
+    dispatch(fetchDocumentData(params.id));
+  }, [dispatch, params.id]);
 
   if (status === "success") {
     return (
