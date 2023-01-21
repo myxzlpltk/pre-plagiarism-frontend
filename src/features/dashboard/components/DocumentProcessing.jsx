@@ -9,7 +9,6 @@ import * as animationData from "../../../shared/lottie/checking-doc.json";
 const DocumentProcessing = (props) => {
   const jobCreatedAt = useSelector((state) => state.dashboard.jobCreatedAt);
   const jobFileName = useSelector((state) => state.dashboard.jobFileName);
-  const date = moment(jobCreatedAt).unix();
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -26,7 +25,7 @@ const DocumentProcessing = (props) => {
     >
       <p className="text-md font-semibold">
         <span>Waktu eksekusi </span>
-        <SimpleTimer time={date} />
+        <SimpleTimer time={moment(jobCreatedAt).unix()} />
       </p>
       <Lottie options={defaultOptions} width="50%" isClickToPauseDisabled />
       <h3 className="text-2xl">Sedang memproses...</h3>

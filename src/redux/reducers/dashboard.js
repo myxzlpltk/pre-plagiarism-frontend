@@ -12,11 +12,6 @@ export const dashboardSlice = createSlice({
     fetchStatus: "loading",
     data: [],
   },
-  reducers: {
-    setJobFileName: (state, action) => {
-      state.jobFileName = action.payload;
-    },
-  },
   extraReducers: (builder) => {
     builder.addCase(login.fulfilled, (state, action) => {
       if (action.payload.idle) {
@@ -29,9 +24,9 @@ export const dashboardSlice = createSlice({
     builder.addCase(uploadFile.pending, (state) => {
       state.jobStatus = "loading";
     });
-    builder.addCase(uploadFile.fulfilled, (state, action) => {
+    builder.addCase(uploadFile.fulfilled, (state) => {
       state.jobStatus = "working";
-      state.jobCreatedAt = action.payload.createdAt;
+      state.jobCreatedAt = Date.now();
       toast.success("File uploaded successfully");
     });
     builder.addCase(uploadFile.rejected, (state, action) => {
@@ -46,6 +41,14 @@ export const dashboardSlice = createSlice({
     builder.addCase(fetchDashboardData.fulfilled, (state, action) => {
       state.fetchStatus = "success";
       state.data = action.payload;
+
+      let job = action.payload.find((el) => el.status === "processing");
+      if (job) {
+        state.jobStatus = "working";
+        state.jobFileName = job['originalFilename'];
+      } else {
+        state.jobStatus = "idle";
+      }
     });
     builder.addCase(fetchDashboardData.rejected, (state, action) => {
       state.fetchStatus = "error";
@@ -83,8 +86,6 @@ export const uploadFile = createAsyncThunk(
     } else if (acceptedFiles.length > 1) {
       return rejectWithValue("Hanya boleh upload 1 file");
     } else {
-      dispatch(setJobFileName(acceptedFiles[0].name));
-
       const formData = new FormData();
       formData.append("file", acceptedFiles[0]);
 
@@ -101,6 +102,4 @@ export const uploadFile = createAsyncThunk(
     }
   }
 );
-
-export const { setJobFileName } = dashboardSlice.actions;
 export default dashboardSlice.reducer;
