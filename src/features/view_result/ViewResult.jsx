@@ -20,16 +20,16 @@ const ViewResult = () => {
 
   if (status === "success") {
     return (
-      <div className="flex">
+      <div className="flex h-screen">
         <div className="basis-1/3 lg:basis-1/4">
           <ViewerSidebar />
         </div>
-        <div className="basis-2/3 lg:basis-2/4">
+        <div className="basis-2/3 lg:basis-3/4">
           <ViewerDocument />
         </div>
       </div>
     );
-  } else if (status === "success") {
+  } else if (status === "error") {
     return (
       <div className="py-20">
         <FaExclamationTriangle className="text-5xl text-red-500 mx-auto mb-4" />

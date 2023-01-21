@@ -100,6 +100,11 @@ const Dashboard = () => {
                       </td>
                     </tr>
                   ))}
+                  {data.length === 0 && (
+                    <tr>
+                      <td colSpan={5} className="text-center">Data Kosong</td>
+                    </tr>
+                  )}
                 </React.Fragment>
               ) : (
                 <tr>

@@ -1,16 +1,13 @@
-import React, { useEffect } from "react";
-import { Toaster } from "react-hot-toast";
-import { useDispatch } from "react-redux";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import React, {useEffect} from "react";
+import {useDispatch} from "react-redux";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Dashboard from "./features/dashboard/Dashboard";
 import Home from "./features/home/Home";
 import Login from "./features/login/Login";
 import ViewResult from "./features/view_result/ViewResult";
-import { login } from "./redux/reducers/auth";
-import Footer from "./shared/components/Footer";
-import Navbar from "./shared/components/Navbar";
+import {login} from "./redux/reducers/auth";
+import PageLayout from "./shared/components/PageLayout";
 import RequireAuth from "./shared/components/RequireAuth";
-import AuthVerify from "./shared/utils/AuthVerify";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -25,36 +22,27 @@ const App = () => {
     };
 
     checkLogin();
-    const interval = setInterval(checkLogin, 5000);
-    return () => clearInterval(interval);
+    // const interval = setInterval(checkLogin, 5000);
+    // return () => clearInterval(interval);
   }, [dispatch]);
 
   return (
     <BrowserRouter>
-      <div>
-        <Toaster />
-        <Navbar />
-
-        <div className="relative min-h-screen">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route
-              path="/dashboard"
-              element={
-                <RequireAuth>
-                  <Dashboard />
-                </RequireAuth>
-              }
-            />
-            <Route path="/dashboard/viewer/:id" element={<ViewResult />} />
-          </Routes>
-
-          <AuthVerify />
-        </div>
-
-        <Footer />
-      </div>
+      <Routes>
+        <Route element={<PageLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/dashboard"
+            element={
+              <RequireAuth>
+                <Dashboard />
+              </RequireAuth>
+            }
+          />
+        </Route>
+        <Route path="/dashboard/viewer/:id" element={<ViewResult />} />
+      </Routes>
     </BrowserRouter>
   );
 };

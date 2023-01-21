@@ -30,6 +30,7 @@ export const viewerSlice = createSlice({
   reducers: {
     setActiveIndex: (state, action) => {
       state.activeIndex = action.payload;
+      // document.location.hash = `highlight-${state.highlights[action.payload].id}`;
       window.history.replaceState(
         undefined,
         undefined,
@@ -38,6 +39,7 @@ export const viewerSlice = createSlice({
     },
     resetHighlight: (state) => {
       state.activeIndex = -1;
+      // document.location.hash = "";
       window.history.replaceState(undefined, undefined, "#");
     },
   },
@@ -117,12 +119,12 @@ export const fetchDocumentData = createAsyncThunk(
 
     (res.data.result?.method5?.pages || []).forEach((page, index) => {
       let rects = page.items.map((item) => ({
-        x1: item.rect.x0,
-        y1: item.rect.y0,
-        x2: item.rect.x1,
-        y2: item.rect.y1,
-        width: page.page_width,
-        height: page.page_height,
+        x1: item.rect.x1,
+        y1: item.rect.y1,
+        x2: item.rect.x2,
+        y2: item.rect.y2,
+        width: page.width,
+        height: page.height,
       }));
       let combinedRect = mergeAll(rects);
 

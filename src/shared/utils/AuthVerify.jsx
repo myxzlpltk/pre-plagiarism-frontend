@@ -21,6 +21,8 @@ const AuthVerify = (props) => {
       }
     }
   }, [dispatch, location, props]);
+
+  return null;
 };
 
 export default AuthVerify;

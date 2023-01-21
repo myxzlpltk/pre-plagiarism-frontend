@@ -10,7 +10,7 @@ const ViewerSidebar = () => {
 
   let pageNumber = -1;
   return (
-    <div className="sidebar max-h-screen w-full overflow-y-scroll">
+    <div className="sidebar h-screen w-full overflow-y-scroll">
       <div className="description p-4">
         <h2 className="text-xl font-semibold">Hasil</h2>
       </div>
