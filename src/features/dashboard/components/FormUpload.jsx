@@ -19,7 +19,7 @@ const FormUpload = () => {
             accept="application/pdf"
             multiple={false}
           />
-          <FaFilePdf className="text-5xl mb-5" />
+          <FaFilePdf className="text-5xl mb-5 mx-auto" />
           <h3 className="text-2xl">
             {isDragActive ? "Seret file disini" : "Klik atau seret file disini"}
           </h3>

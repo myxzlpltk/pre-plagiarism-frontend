@@ -46,7 +46,6 @@ export const authSlice = createSlice({
 export const login = createAsyncThunk(
   "auth/login",
   async (token: string, { rejectWithValue, dispatch }) => {
-    console.log(token);
     localStorage.setItem("token", token);
     const decoded = jwtDecode(token, {});
 

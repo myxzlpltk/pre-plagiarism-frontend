@@ -8,8 +8,14 @@ export const dashboardSlice = createSlice({
   initialState: {
     jobStatus: "idle",
     jobCreatedAt: null,
+    jobFileName: "file.pdf",
     fetchStatus: "loading",
     data: [],
+  },
+  reducers: {
+    setJobFileName: (state, action) => {
+      state.jobFileName = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(login.fulfilled, (state, action) => {
@@ -77,6 +83,8 @@ export const uploadFile = createAsyncThunk(
     } else if (acceptedFiles.length > 1) {
       return rejectWithValue("Hanya boleh upload 1 file");
     } else {
+      dispatch(setJobFileName(acceptedFiles[0].name));
+
       const formData = new FormData();
       formData.append("file", acceptedFiles[0]);
 
@@ -94,5 +102,5 @@ export const uploadFile = createAsyncThunk(
   }
 );
 
-// export const { setStatus } = dashboardSlice.actions;
+export const { setJobFileName } = dashboardSlice.actions;
 export default dashboardSlice.reducer;

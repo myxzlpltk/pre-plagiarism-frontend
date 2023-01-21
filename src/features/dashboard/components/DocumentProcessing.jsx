@@ -8,6 +8,7 @@ import * as animationData from "../../../shared/lottie/checking-doc.json";
 
 const DocumentProcessing = (props) => {
   const jobCreatedAt = useSelector((state) => state.dashboard.jobCreatedAt);
+  const jobFileName = useSelector((state) => state.dashboard.jobFileName);
   const date = moment(jobCreatedAt).unix();
   const defaultOptions = {
     loop: true,
@@ -29,9 +30,7 @@ const DocumentProcessing = (props) => {
       </p>
       <Lottie options={defaultOptions} width="50%" isClickToPauseDisabled />
       <h3 className="text-2xl">Sedang memproses...</h3>
-      <p className="text-sm font-light line-clamp-1">
-        Skripsi Revisi Saddam.pdf
-      </p>
+      <p className="text-sm font-light line-clamp-1">{jobFileName || "file.pdf"}</p>
     </div>
   );
 };
