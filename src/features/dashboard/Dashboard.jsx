@@ -88,7 +88,7 @@ const Dashboard = () => {
                           <Link
                             className="btn btn-sm"
                             to={generatePath("/dashboard/viewer/:id", {
-                              id: doc._id,
+                              id: doc.id,
                             })}
                           >
                             <FaEye />
