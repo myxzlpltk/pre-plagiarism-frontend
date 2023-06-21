@@ -23,7 +23,7 @@ export const viewerSlice = createSlice({
   name: "viewer",
   initialState: {
     status: "idle",
-    url: "/docs/combined.pdf",
+    url: "",
     highlights: [],
     activeIndex: -1,
   },
@@ -73,7 +73,7 @@ export const viewerSlice = createSlice({
 
 export const fetchDocumentData = createAsyncThunk(
   "viewer/fetchDocumentData",
-  async (id: String, { rejectWithValue }) => {
+  async (id, { rejectWithValue }) => {
     const res = await api.get("documents/" + id);
 
     if (res.status !== 200) {
