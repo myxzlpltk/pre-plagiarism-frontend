@@ -5,28 +5,9 @@ import MethodCard from "./MethodCard";
 import SimpleMethodCard from "./SimpleMethodCard";
 
 const HowItWorksSection = () => {
-  const images = useSelector((state) => state.home.images);
+  const methods = useSelector((state) => state.home.methods);
   const activeMethod = useSelector((state) => state.home.activeMethod);
   const dispatch = useDispatch();
-
-  const data = [
-    {
-      title: "Teks Ilusif",
-      description: "Mengubah warna teks menjadi putih seolah-olah spasi",
-    },
-    {
-      title: "Gambar Paragraf",
-      description: "Mengubah bagian paragraf menjadi gambar",
-    },
-    {
-      title: "Teks Tersembunyi",
-      description: "Menyembunyikan teks spam dibalik gambar",
-    },
-    {
-      title: "Font Palsu",
-      description: "Menggunakan font palsu untuk mengubah teks",
-    },
-  ];
 
   return (
     <section
@@ -43,7 +24,7 @@ const HowItWorksSection = () => {
           </h5>
           <div className="flex flex-wrap">
             <div className="basis-5/12 pt-10 hidden lg:block">
-              {data.map((item, index) => (
+              {methods.map((item, index) => (
                 <MethodCard
                   key={`method-card-${index}`}
                   title={item.title}
@@ -55,7 +36,7 @@ const HowItWorksSection = () => {
             </div>
             <div className="basis-full block lg:hidden">
               <div className="flex flex-wrap items-center justify-center mb-2">
-                {data.map((item, index) => (
+                {methods.map((item, index) => (
                   <SimpleMethodCard
                     key={`simple-method-card-${index}`}
                     title={item.title}
@@ -65,12 +46,12 @@ const HowItWorksSection = () => {
                 ))}
               </div>
               <p className="text-center mb-4">
-                {data[activeMethod].description}
+                {methods[activeMethod].description}
               </p>
             </div>
             <div className="basis-full lg:basis-7/12">
               <img
-                src={images[activeMethod]}
+                src={methods[activeMethod].image}
                 alt="Metode"
                 className="max-w-full rounded-xl"
               />

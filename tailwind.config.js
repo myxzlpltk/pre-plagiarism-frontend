@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        "how-it-works": "url('/public/img/um-rektorat.jpg')",
+        "how-it-works": "url('shared/images/um-rektorat.jpg')",
       },
       saturate: {
         75: ".75",

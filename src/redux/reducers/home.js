@@ -5,11 +5,27 @@ export const homeSlice = createSlice({
   name: "home",
   initialState: {
     activeMethod: 0,
-    images: [
-      "/img/method2.jpg",
-      "/img/method2.jpg",
-      "/img/method5.jpg",
-      "/img/method5.jpg",
+    methods: [
+      {
+        title: "Teks Ilusif",
+        description: "Mengubah warna teks menjadi putih seolah-olah spasi",
+        image: "/img/method2.webp"
+      },
+      {
+        title: "Gambar Paragraf",
+        description: "Mengubah bagian paragraf menjadi gambar",
+        image: "/img/method2.webp"
+      },
+      {
+        title: "Teks Tersembunyi",
+        description: "Menyembunyikan teks spam dibalik gambar",
+        image: "/img/method5.webp"
+      },
+      {
+        title: "Font Palsu",
+        description: "Menggunakan font palsu untuk mengubah teks",
+        image: "/img/method5.webp"
+      },
     ],
     idCTA: "how-it-works",
   },
