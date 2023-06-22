@@ -76,7 +76,7 @@ export const fetchDashboardData = createAsyncThunk(
 
 export const uploadFile = createAsyncThunk(
   "dashboard/upload",
-  async (files: File[], { rejectWithValue, dispatch }) => {
+  async (files, { rejectWithValue, dispatch }) => {
     const acceptedFiles = files.filter(
       (file) => file.type === "application/pdf"
     );

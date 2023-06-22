@@ -23,7 +23,7 @@ export const viewerSlice = createSlice({
   name: "viewer",
   initialState: {
     status: "idle",
-    url: "",
+    url: null,
     highlights: [],
     activeIndex: -1,
   },
@@ -49,7 +49,7 @@ export const viewerSlice = createSlice({
     });
     builder.addCase(fetchDocumentData.fulfilled, (state, action) => {
       state.status = "success";
-      state.url = `${process.env.REACT_APP_API_URL}/files/${action.payload.id}/${action.payload.filename}`;
+      state.url = action.payload.url;
       state.highlights = action.payload.highlights;
 
       let id = document.location.hash.slice("#highlight-".length);
@@ -163,6 +163,7 @@ export const fetchDocumentData = createAsyncThunk(
       id: id,
       filename: res.data.filename,
       highlights: highlights,
+      url: res.data.url
     };
   }
 );

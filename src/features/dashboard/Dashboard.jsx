@@ -17,7 +17,11 @@ const Dashboard = () => {
 
   // Call fetchDashboardData on periodically if jobStatus is working
   useEffect(() => {
-    dispatch(fetchDashboardData());
+    // Only fetch first when idling
+    if (jobStatus === "idle") {
+      dispatch(fetchDashboardData());
+    }
+
     const interval = setInterval(() => {
       if (jobStatus === "working") {
         dispatch(fetchDashboardData());
