@@ -19,7 +19,7 @@ const OurTeamSection = () => {
           <img
             src="/img/syukur.webp"
             alt="Muhammad Syukur Abadi"
-            className=" cursor-pointer saturate-75 hover:saturate-100 hover:brightness-110"
+            className="cursor-pointer saturate-75 hover:saturate-100 hover:brightness-110 transition-transform duration-300 transform hover:scale-150 hover:animate-spin"
           />
         </div>
         <div className="tooltip -ml-10" data-tip="Saddam Sinatrya Jalu Mukti">
